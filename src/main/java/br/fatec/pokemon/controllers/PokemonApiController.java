@@ -1,21 +1,18 @@
 package br.fatec.pokemon.controllers;
-import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
 
 import br.fatec.pokemon.models.Pokemon;
-import org.springframework.ui.Model;
-import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/pokemon")
-public class PokemonController {
+import java.util.ArrayList;
+import java.util.List;
+@RestController
+@RequestMapping("/api/pokedex")
+public class PokemonApiController {
     private static final List<Pokemon> _pokemon = new ArrayList<Pokemon>();
 
-    public PokemonController(){
+    public PokemonApiController(){
         //(int id, String name, String type, String subtype, String evolveId
         _pokemon.add(new Pokemon(1, "Bulbasaur", "Grass", "Poison","Ivysaur","https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png"));
         _pokemon.add(new Pokemon(2, "Ivysaur", "Grass", "Poison","Venusaur","https://assets.pokemon.com/assets/cms2/img/pokedex/detail/002.png"));
@@ -27,17 +24,8 @@ public class PokemonController {
         _pokemon.add(new Pokemon(8, "Wartotle", "Water", "","Blastoise","https://assets.pokemon.com/assets/cms2/img/pokedex/detail/008.png"));
         _pokemon.add(new Pokemon(9, "Blastoise", "Water", "","","https://assets.pokemon.com/assets/cms2/img/pokedex/detail/009.png"));
     }
-
     @GetMapping
-    public String getPokemon (Model model){
-        model.addAttribute("Pokemon", _pokemon);
-        return "Pokemon";
+    public List<Pokemon> getPokedex(){
+        return _pokemon;
     }
-
-    @GetMapping("PokeApi")
-    public String getPokedexApi(Model model){
-        model.addAttribute("Pokemon", _pokemon);
-        return "PokeApi";
-    }
-
 }
